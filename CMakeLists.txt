@@ -67,7 +67,9 @@ if (sctp_inet6)
 	add_definitions(-DINET6)
 endif ()
 
-option(sctp_werror "Thread warning as error" 1)
+if (NOT ${CMAKE_SYSTEM_NAME} MATCHES "Android")
+    option(sctp_werror "Thread warning as error" 1)
+endif()
 
 option(sctp_link_programs_static "Link example programs static" 0)
 
@@ -125,9 +127,9 @@ endif ()
 set(CMAKE_REQUIRED_INCLUDES "${CMAKE_SOURCE_DIR}/usrsctplib")
 
 #check_include_file(usrsctp.h have_usrsctp_h)
-#if (NOT have_usrsctp_h)
-#	message(FATAL_ERROR "usrsctp.h not found")
-#endif ()
+if (NOT have_usrsctp_h AND NOT ${CMAKE_SYSTEM_NAME} MATCHES "Android")
+	message(FATAL_ERROR "usrsctp.h not found")
+endif ()
 
 check_struct_has_member("struct sockaddr" "sa_len" "sys/types.h;sys/socket.h" have_sa_len)
 if (have_sa_len)
@@ -217,7 +219,7 @@ if ("${CMAKE_C_COMPILER_ID}" MATCHES "Clang" OR "${CMAKE_C_COMPILER_ID}" MATCHES
 		set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wstrict-prototypes")
 	endif ()
 
-	if (sctp_werror)
+	if (sctp_werror AND NOT ${CMAKE_SYSTEM_NAME} MATCHES "Android")
 		set(CMAKE_C_FLAGS   "${CMAKE_C_FLAGS}   -Werror")
 		set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Werror")
 	endif ()
