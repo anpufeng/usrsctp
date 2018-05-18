@@ -82,6 +82,9 @@ if (${CMAKE_SYSTEM_NAME} MATCHES "OpenBSD")
 	add_definitions(-U__OpenBSD__)
 endif ()
 
+if (${CMAKE_SYSTEM_NAME} MATCHES "Android")
+	ADD_DEFINITIONS (-D__Userspace_os_Linux)
+endif ()
 
 #################################################
 # LIBRARY FILES
@@ -167,6 +170,12 @@ list(APPEND usrsctp_sources
 	user_recv_thread.c
 	user_socket.c
 )
+
+IF(CMAKE_SYSTEM_NAME STREQUAL "Android")
+	list(APPEND usrsctp_sources
+			netinet/ifaddrs.c
+			)
+ENDIF()
 
 add_library(usrsctp SHARED ${usrsctp_sources} ${usrsctp_headers})
 add_library(usrsctp-static STATIC ${usrsctp_sources} ${usrsctp_headers})
