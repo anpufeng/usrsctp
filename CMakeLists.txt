@@ -127,7 +127,7 @@ endif ()
 set(CMAKE_REQUIRED_INCLUDES "${CMAKE_SOURCE_DIR}/usrsctplib")
 
 #check_include_file(usrsctp.h have_usrsctp_h)
-if (NOT have_usrsctp_h AND NOT ${CMAKE_SYSTEM_NAME} MATCHES "Android|Linux")
+if (NOT have_usrsctp_h AND NOT ${CMAKE_SYSTEM_NAME} MATCHES "Android|Linux|Darwin")
 	message(FATAL_ERROR "usrsctp.h not found")
 endif ()
 
