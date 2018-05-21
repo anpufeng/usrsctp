@@ -177,18 +177,18 @@ IF(CMAKE_SYSTEM_NAME STREQUAL "Android")
 			)
 ENDIF()
 
-add_library(usrsctp SHARED ${usrsctp_sources} ${usrsctp_headers})
+add_library(usrsctp-shared SHARED ${usrsctp_sources} ${usrsctp_headers})
 add_library(usrsctp-static STATIC ${usrsctp_sources} ${usrsctp_headers})
 
 if (WIN32)
 	message(STATUS "link library: ws2_32")
-	target_link_libraries(usrsctp ws2_32)
+	target_link_libraries(usrsctp-shared ws2_32)
 	target_link_libraries(usrsctp-static ws2_32)
 endif ()
 
 set_target_properties(usrsctp-static PROPERTIES OUTPUT_NAME "usrsctp")
-set_target_properties(usrsctp PROPERTIES IMPORT_SUFFIX "_import.lib")
-set_target_properties(usrsctp PROPERTIES SOVERSION 1 VERSION 1.0.0)
+set_target_properties(usrsctp-shared PROPERTIES IMPORT_SUFFIX "_import.lib")
+set_target_properties(usrsctp-shared PROPERTIES SOVERSION 1 VERSION 1.0.0)
 
 if (NOT DEFINED CMAKE_INSTALL_LIBDIR)
 	SET(CMAKE_INSTALL_LIBDIR lib)
@@ -199,5 +199,5 @@ endif ()
 # INSTALL LIBRARY AND HEADER
 #################################################
 
-install(TARGETS usrsctp usrsctp-static DESTINATION ${CMAKE_INSTALL_LIBDIR})
+install(TARGETS usrsctp-shared usrsctp-static DESTINATION ${CMAKE_INSTALL_LIBDIR})
 install(FILES usrsctp.h DESTINATION include)
