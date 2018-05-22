@@ -419,6 +419,9 @@ sctp_init_ifns_for_vrf(int vrfid)
 static void
 sctp_init_ifns_for_vrf(int vrfid)
 {
+#ifdef __Userspace_os_Android
+	return;
+#else
 #if defined(INET) || defined(INET6)
 	int rc;
 	struct ifaddrs *ifa, *ifas;
@@ -478,6 +481,7 @@ sctp_init_ifns_for_vrf(int vrfid)
 	}
 	freeifaddrs(ifas);
 #endif
+#endif /*__Userspace_os_Android*/
 }
 #endif
 

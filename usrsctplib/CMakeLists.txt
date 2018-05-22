@@ -171,12 +171,6 @@ list(APPEND usrsctp_sources
 	user_socket.c
 )
 
-IF(CMAKE_SYSTEM_NAME STREQUAL "Android")
-	list(APPEND usrsctp_sources
-			netinet/ifaddrs.c
-			)
-ENDIF()
-
 add_library(usrsctp-shared SHARED ${usrsctp_sources} ${usrsctp_headers})
 add_library(usrsctp-static STATIC ${usrsctp_sources} ${usrsctp_headers})
 

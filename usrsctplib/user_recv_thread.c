@@ -91,6 +91,9 @@ sctp_get_rtaddrs(int addrs, struct sockaddr *sa, struct sockaddr **rti_info)
 static void
 sctp_handle_ifamsg(unsigned char type, unsigned short index, struct sockaddr *sa)
 {
+#ifdef __Userspace_os_Android
+	return;
+#else
 	int rc;
 	struct ifaddrs *ifa, *ifas;
 
@@ -130,6 +133,7 @@ sctp_handle_ifamsg(unsigned char type, unsigned short index, struct sockaddr *sa
 		                       ifa->ifa_name);
 	}
 	freeifaddrs(ifas);
+#endif /*__Userspace_os_Android*/
 }
 
 static void *

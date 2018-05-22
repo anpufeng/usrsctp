@@ -498,13 +498,10 @@ struct sx {int dummy;};
 #include <sys/types.h>
 #if !defined(__Userspace_os_Windows)
 #if defined(INET) || defined(INET6)
-
-#if defined(__Userspace_os_Android)
-#include "ifaddrs.h"
+#ifdef __Userspace_os_Android
 #else
 #include <ifaddrs.h>
 #endif
-
 #endif
 
 /* for ioctl */
